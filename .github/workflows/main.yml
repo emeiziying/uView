@@ -26,4 +26,5 @@ jobs:
         with:
           token: ${{ secrets.NPM_TOKEN }}
           package: ./uview-ui/package.json
+          access: public
   
