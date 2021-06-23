@@ -242,7 +242,7 @@ export default {
 				// 不加可能圆角无效
 				style.overflow = 'hidden';
 			}
-			if(this.duration) style.transition = `all ${this.duration / 1000}s linear`;
+			if(this.duration) style.transition = `all ${this.duration / 1000}s ease-in-out`;
 			return style;
 		},
 		// 中部弹窗的特有样式
@@ -357,7 +357,7 @@ export default {
 	/* #endif */
 	position: absolute;
 	z-index: 1003;
-	transition: all 0.25s linear;
+	transition: all 0.25s ease-in-out;
 }
 
 .u-drawer__scroll-view {
