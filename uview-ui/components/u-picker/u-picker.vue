@@ -146,6 +146,14 @@ export default {
 			type: [String, Number],
 			default: 2050
 		},
+		minDate:{
+			type: Number,
+			default: ''
+		},
+		maxDate:{
+			type: Number,
+			default: ''
+		},
 		// "取消"按钮的颜色
 		cancelColor: {
 			type: String,
@@ -411,12 +419,25 @@ export default {
 		},
 		// 设置picker的某一列值
 		setYears() {
+			let startYear = this.startYear
+			let endYear = this.endYear
+			
+			if (this.minDate) {
+				startYear = new Date(this.minDate).getFullYear()
+			}
+
+			if (this.maxDate) {
+				endYear = new Date(this.maxDate).getFullYear()
+			}
+
 			// 获取年份集合
-			this.years = this.generateArray(this.startYear, this.endYear);
+			this.years = this.generateArray(startYear, endYear);
 			// 设置this.valueArr某一项的值，是为了让picker预选中某一个值
 			this.valueArr.splice(this.valueArr.length - 1, 1, this.getIndex(this.years, this.year));
 		},
 		setMonths() {
+			// console.log(this.years,this.year,this.valueArr);
+
 			this.months = this.generateArray(1, 12);
 			this.valueArr.splice(this.valueArr.length - 1, 1, this.getIndex(this.months, this.month));
 		},

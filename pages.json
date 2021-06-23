@@ -711,7 +711,8 @@
 					"style": {
 						"navigationBarTitleText": "picker-选择器"
 					}
-				}, // noticeBar通告栏
+				},
+				// noticeBar通告栏
 				{
 					"path": "noticeBar/index",
 					"style": {

@@ -11,6 +11,8 @@
 					:defaultRegion="defaultRegion"
 					:params="params"
 					end-year="2030"
+					:min-date="minDate"
+					:max-date="maxDate"
 					@confirm="confirm"
 					:defaultSelector="defaultSelector"
 					:range="range"
@@ -49,10 +51,10 @@
 export default {
 	data() {
 		return {
-			show: false,
+			show: true,
 			input: '',
 			rangKey: 'name',
-			mode: 'selector',
+			mode: 'time',
 			range: ['一', '片', '冰', '心', '在', '玉', '壶'],
 			defaultTime: '2019-12-11 20:15:35',
 			defaultSelector: [0],
@@ -68,7 +70,9 @@ export default {
 				city: true,
 				area: true,
 				timestamp: true
-			}
+			},
+			minDate: +new Date(2020, 10, 1),
+			maxDate: +new Date(2021, 0, 1),
 		};
 	},
 	computed: {
