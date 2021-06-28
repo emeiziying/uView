@@ -302,7 +302,10 @@ export default {
 		// watch监听月份的变化，实时变更日的天数，因为不同月份，天数不一样
 		// 一个月可能有30，31天，甚至闰年2月的29天，平年2月28天
 		yearAndMonth(val) {
-			if (this.params.year) this.setDays();
+			console.log('yearAndMonth',val);
+			
+			if (this.params.year) this.setMonths();
+			if (this.params.month) this.setDays();
 		},
 		// 微信和QQ小程序由于一些奇怪的原因(故同时对所有平台均初始化一遍)，需要重新初始化才能显示正确的值
 		value(n) {
@@ -436,14 +439,59 @@ export default {
 			this.valueArr.splice(this.valueArr.length - 1, 1, this.getIndex(this.years, this.year));
 		},
 		setMonths() {
-			// console.log(this.years,this.year,this.valueArr);
+			let startYear = this.startYear
+			let endYear = this.endYear
+			let startMonth = 1
+			let endMonth = 12
+			
+			if (this.minDate) {
+				startYear = new Date(this.minDate).getFullYear()
+			}
 
-			this.months = this.generateArray(1, 12);
+			if (this.maxDate) {
+				endYear = new Date(this.maxDate).getFullYear()
+			}
+
+			if(this.year === startYear) {
+				startMonth = new Date(this.minDate).getMonth() + 1
+			}
+
+			if(this.year === endYear) {
+				endMonth = new Date(this.maxDate).getMonth() + 1
+			}
+
+			this.months = this.generateArray(startMonth, endMonth);
 			this.valueArr.splice(this.valueArr.length - 1, 1, this.getIndex(this.months, this.month));
 		},
 		setDays() {
-			let totalDays = new Date(this.year, this.month, 0).getDate();
-			this.days = this.generateArray(1, totalDays);
+			let startYear = this.startYear
+			let endYear = this.endYear
+			let startMonth = 1
+			let endMonth = 12
+			let startDay = 1
+			let endDay = 31
+			
+			if (this.minDate) {
+				startYear = new Date(this.minDate).getFullYear()
+			}
+
+			if (this.maxDate) {
+				endYear = new Date(this.maxDate).getFullYear()
+			}
+
+			if(this.year === startYear && this.month === new Date(this.minDate).getMonth() + 1) {
+				startDay = new Date(this.minDate).getDate()
+			}
+
+			if(this.year === endYear && this.month === new Date(this.maxDate).getMonth() + 1) {
+				endDay = new Date(this.maxDate).getDate()
+			}else{
+				endDay = new Date(this.year, this.month, 0).getDate()
+			}
+
+			// let totalDays = new Date(this.year, this.month, 0).getDate();
+			// this.days = this.generateArray(1, totalDays);
+			this.days = this.generateArray(startDay, endDay);
 			let index = 0;
 			// 这里不能使用类似setMonths()中的this.valueArr.splice(this.valueArr.length - 1, xxx)做法
 			// 因为this.month和this.year变化时，会触发watch中的this.setDays()，导致this.valueArr.length计算有误
