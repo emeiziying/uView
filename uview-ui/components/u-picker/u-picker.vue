@@ -1,7 +1,7 @@
 <template>
-	<u-popup :maskCloseAble="maskCloseAble" mode="bottom" :popup="false" v-model="value" length="auto" :safeAreaInsetBottom="safeAreaInsetBottom" @close="close" :z-index="uZIndex">
+	<u-popup :maskCloseAble="maskCloseAble" mode="bottom" :popup="false" v-model="value" :border-radius='borderRadius' length="auto" :safeAreaInsetBottom="safeAreaInsetBottom" @close="close" :z-index="uZIndex">
 		<view class="u-datetime-picker">
-			<view class="u-picker-header" @touchmove.stop.prevent="">
+			<view class="u-picker-header" :class="{'u-picker-header_border': border}" @touchmove.stop.prevent="">
 				<view class="u-btn-picker u-btn-picker--tips" 
 					:style="{ color: cancelColor }" 
 					hover-class="u-opacity" 
@@ -49,7 +49,7 @@
 					</picker-view-column>
 				</picker-view>
 				<picker-view v-else-if="mode == 'multiSelector' && !reset" :value="valueArr" @change="change" class="u-picker-view" @pickstart="pickstart" @pickend="pickend">
-					<picker-view-column v-for="(item, index) in range" :key="index">
+					<picker-view-column v-for="(item, index) in range" :key="index" class="u-picker-view-column">
 						<view class="u-column-item" v-for="(item1, index1) in item" :key="index1">
 							<view class="u-line-1">{{ getItemValue(item1, 'multiSelector') }}</view>
 						</view>
@@ -148,11 +148,11 @@ export default {
 		},
 		minDate:{
 			type: Number,
-			default: ''
+			default: 0
 		},
 		maxDate:{
 			type: Number,
-			default: ''
+			default: 0
 		},
 		// "取消"按钮的颜色
 		cancelColor: {
@@ -221,7 +221,17 @@ export default {
 		confirmText: {
 			type: String,
 			default: '确认'
-		}
+		},
+		// 是否显示边框
+		border: {
+			type: Boolean,
+			default: true
+		},
+		// 显示显示弹窗的圆角，单位rpx
+		borderRadius: {
+			type: [Number, String],
+			default: 0
+		},
 	},
 	data() {
 		return {
@@ -302,8 +312,6 @@ export default {
 		// watch监听月份的变化，实时变更日的天数，因为不同月份，天数不一样
 		// 一个月可能有30，31天，甚至闰年2月的29天，平年2月28天
 		yearAndMonth(val) {
-			console.log('yearAndMonth',val);
-			
 			if (this.params.year) this.setMonths();
 			if (this.params.month) this.setDays();
 		},
@@ -576,6 +584,7 @@ export default {
 		},
 		close() {
 			this.$emit('input', false);
+			this.$emit('cancel');
 		},
 		// 用户更改picker的列选项
 		change(e) {
@@ -597,9 +606,17 @@ export default {
 			} else if (this.mode == 'multiSelector') {
 				let index = null;
 				// 对比前后两个数组，寻找变更的是哪一列，如果某一个元素不同，即可判定该列发生了变化
-				this.defaultSelector.map((val, idx) => {
-					if (val != e.detail.value[idx]) index = idx;
-				});
+				// this.defaultSelector.map((val, idx) => {
+				// 	if (val != e.detail.value[idx]) index = idx;
+				// });
+				this.multiSelectorValue.map((val, idx) => {
+          			if (val != e.detail.value[idx]) {
+            			index = idx;
+            			this.multiSelectorValue = JSON.parse(
+              				JSON.stringify(e.detail.value)
+            			);
+          			}
+        		});
 				// 为了让用户对多列变化时，对动态设置其他列的变更
 				if (index != null) {
 					this.$emit('columnchange', {
@@ -672,15 +689,19 @@ export default {
 	position: relative;
 }
 
-.u-picker-header::after {
-	content: '';
-	position: absolute;
+// .u-picker-header::after {
+// 	content: '';
+// 	position: absolute;
+// 	border-bottom: 1rpx solid #eaeef1;
+// 	-webkit-transform: scaleY(0.5);
+// 	transform: scaleY(0.5);
+// 	bottom: 0;
+// 	right: 0;
+// 	left: 0;
+// }
+
+.u-picker-header_border {
 	border-bottom: 1rpx solid #eaeef1;
-	-webkit-transform: scaleY(0.5);
-	transform: scaleY(0.5);
-	bottom: 0;
-	right: 0;
-	left: 0;
 }
 
 .u-picker__title {

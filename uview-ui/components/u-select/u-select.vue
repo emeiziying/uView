@@ -9,7 +9,7 @@
 				<u-icon name="arrow-down-fill" size="26" color="#c0c4cc"></u-icon>
 			</view>
 		</view> -->
-		<u-popup :maskCloseAble="maskCloseAble" mode="bottom" :popup="false" v-model="value" length="auto" :safeAreaInsetBottom="safeAreaInsetBottom" @close="close" :z-index="uZIndex">
+		<u-popup :maskCloseAble="maskCloseAble" mode="bottom" :popup="false" v-model="value" :border-radius='borderRadius' length="auto" :safeAreaInsetBottom="safeAreaInsetBottom" @close="close" :z-index="uZIndex">
 			<view class="u-select">
 				<view class="u-select__header" @touchmove.stop.prevent="">
 					<view
@@ -37,7 +37,7 @@
 				</view>
 				<view class="u-select__body">
 					<picker-view @change="columnChange" class="u-select__body__picker-view" :value="defaultSelector" @pickstart="pickstart" @pickend="pickend">
-						<picker-view-column v-for="(item, index) in columnData" :key="index">
+						<picker-view-column v-for="(item, index) in columnData" :key="index" class="u-select__body__picker-view_column">
 							<view class="u-select__body__picker-view__item" v-for="(item1, index1) in item" :key="index1">
 								<view class="u-line-1">{{ item1[labelName] }}</view>
 							</view>
@@ -85,6 +85,11 @@ export default {
 		border: {
 			type: Boolean,
 			default: true
+		},
+		// 显示显示弹窗的圆角，单位rpx
+		borderRadius: {
+			type: [Number, String],
+			default: 0
 		},
 		// 通过双向绑定控制组件的弹出与收起
 		value: {
@@ -333,6 +338,7 @@ export default {
 		},
 		close() {
 			this.$emit('input', false);
+			this.$emit('cancel');
 		},
 		// 点击确定或者取消
 		getResult(event = null) {
