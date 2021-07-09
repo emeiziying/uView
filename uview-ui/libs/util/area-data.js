@@ -1,4 +1,4 @@
-import { areaList } from "@vant/area-data";
+import { areaList } from "@sweet5/area-data";
 
 const { province_list, city_list, county_list } = areaList;
 
