@@ -61,9 +61,7 @@
 </template>
 
 <script>
-import provinces from '../../libs/util/province.js';
-import citys from '../../libs/util/city.js';
-import areas from '../../libs/util/area.js';
+import { provinces, citys ,areas} from "../../libs/util/area-data";
 
 /**
  * picker picker弹出选择器

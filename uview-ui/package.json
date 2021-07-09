@@ -35,5 +35,8 @@
 		"sass-loader": "^8.0.2"
 	},
 	"author": "uView",
-	"license": "MIT"
+	"license": "MIT",
+	"dependencies": {
+		"@sweet5/area-data": "^1.1.1"
+	}
 }
