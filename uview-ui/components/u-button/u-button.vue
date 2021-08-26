@@ -377,7 +377,7 @@ export default {
 	}
 	
 	&--primary {
-		color: $u-main-colorff;
+		color: $u-main-color;
 		border-color: $u-type-primary;
 		background-color: $u-type-primary;
 	}
