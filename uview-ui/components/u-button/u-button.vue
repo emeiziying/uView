@@ -377,7 +377,7 @@ export default {
 	}
 	
 	&--primary {
-		color: #ffffff;
+		color: $u-main-colorff;
 		border-color: $u-type-primary;
 		background-color: $u-type-primary;
 	}
@@ -571,7 +571,7 @@ export default {
 
 .u-primary-hover {
 	background: $u-type-primary-dark !important;
-	color: #fff;
+	color: $u-main-color;
 }
 
 .u-success-hover {
