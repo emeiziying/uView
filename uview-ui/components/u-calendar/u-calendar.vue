@@ -564,7 +564,8 @@
 				font-size: 32rpx;
 				line-height: 32rpx;
 				font-weight: bold;
-				min-width: 220rpx
+				min-width: 220rpx;
+				text-align: center;
 			}
 		}
 	
