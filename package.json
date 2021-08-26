@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/YanxinNet/uView#readme",
   "dependencies": {
+    "@sweet5/area-data": "^1.1.1",
     "vue-i18n": "^8.20.0"
   }
 }

@@ -34,9 +34,9 @@
 				<view class="u-calendar__content__item" :class="{
 					'u-hover-class':openDisAbled(year,month,index+1),
 					'u-calendar__content--start-date': (mode == 'range' && startDate==`${year}-${month}-${index+1}`) || mode== 'date',
-					'u-calendar__content--start-date_circle': (mode == 'range' && startDate==`${year}-${month}-${index+1}`) || mode== 'date',
-					'u-calendar__content--end-date':(mode== 'range' && endDate==`${year}-${month}-${index+1}` && activeShape === 'circle') || mode == 'date',
-					'u-calendar__content--end-date_circle':(mode== 'range' && endDate==`${year}-${month}-${index+1}` && activeShape === 'circle') || mode == 'date'
+					'u-calendar__content--start-date_circle': ((mode == 'range' && startDate==`${year}-${month}-${index+1}`) || mode== 'date') && activeShape === 'circle',
+					'u-calendar__content--end-date':(mode== 'range' && endDate==`${year}-${month}-${index+1}` ) || mode == 'date',
+					'u-calendar__content--end-date_circle': ((mode== 'range' && endDate==`${year}-${month}-${index+1}`) || mode == 'date') && activeShape === 'circle'
 				}" :style="{backgroundColor: getColor(index,1)}" v-for="(item, index) in daysArr" :key="index"
 				 @tap="dateClick(index)">
 					<view class="u-calendar__content__item__inner" :style="{color: getColor(index,2)}">
@@ -278,16 +278,12 @@
 			}
 		},
 		watch: {
-			rangeChange: {
-				immediate: true,
-				handler() {
-					this.min = this.initDate(this.minDate);
-					this.max = this.initDate(this.maxDate || this.today);
-				}
-			},
-			value(val) {
-				val && this.init()
+			dataChange(val) {
+				this.init()
 			}
+		},
+		created() {
+			this.init()
 		},
 		methods: {
 			getColor(index, type) {
@@ -308,6 +304,9 @@
 				let now = new Date();
 				this.today = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
 
+				this.min = this.initDate(this.minDate);
+				this.max = this.initDate(this.maxDate || this.today);
+
 				if (this.mode === 'date') {
 					const value = this.defaultValue ? new Date(this.defaultValue.replace(/\-/g, '/')) : now;
 					this.year = value.getFullYear();
@@ -327,11 +326,11 @@
 				if (this.mode === 'range') {
 					const [startDate = '', endDate = ''] = this.defaultValue;
 					const startTime = startDate ? new Date(startDate.replace(/\-/g, '/')) : now;
-					const endTime = endDate && new Date(endDate.replace(/\-/g, '/'));
+					const endTime = endDate ? new Date(endDate.replace(/\-/g, '/')) : now;
 					this.year = startTime.getFullYear();
 					this.month = startTime.getMonth() + 1;
 					this.day = startTime.getDate();
-					this.activeDate = startDate;
+					this.activeDate = startDate || this.today;
 					this.startDate = startDate;
 					this.startYear = startTime.getFullYear();
 					this.startMonth = startTime.getMonth() + 1;
@@ -342,6 +341,7 @@
 					this.endDate = endDate;
 				}
 
+				
 				this.isStart = true;
 				this.changeData();
 			},
@@ -436,7 +436,6 @@
 					let date = `${this.year}-${this.month}-${day}`;
 					if (this.mode == 'date') {
 						this.activeDate = date;
-						this.$emit('active-change', date);
 					} else {
 						let compare = new Date(date.replace(/\-/g, '/')).getTime() < new Date(this.startDate.replace(/\-/g, '/')).getTime()
 						if (this.isStart || compare) {
@@ -457,7 +456,6 @@
 							this.endDay = this.day;
 							this.isStart = true;
 						}
-						this.$emit('active-change', [this.startDate, this.endDate]);
 					}
 				}
 			},
@@ -529,17 +527,17 @@
 
 <style scoped lang="scss">
 	@import "../../libs/css/style.components.scss";
-
+	
 	.u-calendar {
 		color: $u-content-color;
-
+		
 		&__header {
 			width: 100%;
 			box-sizing: border-box;
 			font-size: 30rpx;
 			background-color: #fff;
 			color: $u-main-color;
-
+			
 			&__text {
 				margin-top: 30rpx;
 				padding: 0 60rpx;
@@ -548,14 +546,14 @@
 				align-items: center;
 			}
 		}
-
+		
 		&__action {
 			padding: 40rpx 0 40rpx 0;
-
+			
 			&__icon {
 				margin: 0 16rpx;
 			}
-
+			
 			&__text {
 				padding: 0 16rpx;
 				color: $u-main-color;
@@ -564,20 +562,20 @@
 				font-weight: bold;
 			}
 		}
-
+	
 		&__week-day {
 			@include vue-flex;
 			align-items: center;
 			justify-content: center;
 			padding: 6px 0;
 			overflow: hidden;
-
+			
 			&__text {
 				flex: 1;
 				text-align: center;
 			}
 		}
-
+	
 		&__content {
 			width: 100%;
 			@include vue-flex;
@@ -586,7 +584,7 @@
 			box-sizing: border-box;
 			background-color: #fff;
 			position: relative;
-
+			
 			&--end-date {
 				border-top-right-radius: 8rpx;
 				border-bottom-right-radius: 8rpx;
@@ -595,7 +593,6 @@
 				border-top-right-radius: 100%;
 				border-bottom-right-radius: 100%;
 			}
-
 			&--start-date {
 				border-top-left-radius: 8rpx;
 				border-bottom-left-radius: 8rpx;
@@ -604,7 +601,7 @@
 				border-top-left-radius: 100%;
 				border-bottom-left-radius: 100%;
 			}
-
+			
 			&__item {
 				width: 14.2857%;
 				@include vue-flex;
@@ -614,7 +611,7 @@
 				overflow: hidden;
 				position: relative;
 				z-index: 2;
-
+				
 				&__inner {
 					height: 84rpx;
 					@include vue-flex;
@@ -624,7 +621,7 @@
 					font-size: 32rpx;
 					position: relative;
 					border-radius: 50%;
-
+					
 					&__desc {
 						width: 100%;
 						font-size: 24rpx;
@@ -637,7 +634,7 @@
 						bottom: 2rpx;
 					}
 				}
-
+				
 				&__tips {
 					width: 100%;
 					font-size: 24rpx;
@@ -651,7 +648,7 @@
 					z-index: 2;
 				}
 			}
-
+			
 			&__bg-month {
 				position: absolute;
 				font-size: 130px;
@@ -663,7 +660,7 @@
 				z-index: 1;
 			}
 		}
-
+	
 		&__bottom {
 			width: 100%;
 			@include vue-flex;
@@ -675,11 +672,11 @@
 			box-sizing: border-box;
 			font-size: 24rpx;
 			color: $u-tips-color;
-
+			
 			&__choose {
 				height: 50rpx;
 			}
-
+			
 			&__btn {
 				width: 100%;
 			}
