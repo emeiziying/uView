@@ -6,6 +6,8 @@
 				<u-calendar v-model="show" ref="calendar" @change="change" :mode="mode"
 					:start-text="startText" :end-text="endText" :range-color="rangeColor"
 					:range-bg-color="rangeBgColor" :active-bg-color="activeBgColor" :btn-type="btnType"
+					:defaultValue="defaultValue"
+					activeShape='circle'
 				>
 				</u-calendar>
 				<view class="u-demo-result-line">
@@ -37,7 +39,7 @@
 	export default {
 		data() {
 			return {
-				show: false,
+				show: true,
 				mode: 'range',
 				result: "请选择日期",
 				startText: '开始',
@@ -46,6 +48,7 @@
 				rangeBgColor: 'rgba(41,121,255,0.13)',
 				activeBgColor: '#2979ff',
 				btnType: 'primary',
+				// defaultValue:["2021-8-11", "2021-8-19"]
 			}
 		},
 		computed: {
