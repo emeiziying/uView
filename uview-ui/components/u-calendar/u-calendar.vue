@@ -9,18 +9,18 @@
 				<slot v-else name="tooltip" />
 			</view>
 			<view class="u-calendar__action u-flex u-row-center">
-				<view class="u-calendar__action__icon">
-					<u-icon v-if="changeYear" name="arrow-left-double" :color="yearArrowColor" @click="changeYearHandler(0)"></u-icon>
+				<view v-if="changeYear" class="u-calendar__action__icon" @click="changeYearHandler(0)">
+					<u-icon name="arrow-left-double" :color="yearArrowColor"></u-icon>
 				</view>
-				<view class="u-calendar__action__icon">
-					<u-icon v-if="changeMonth" name="arrow-left" :color="monthArrowColor" @click="changeMonthHandler(0)"></u-icon>
+				<view v-if="changeMonth" class="u-calendar__action__icon" @click="changeMonthHandler(0)">
+					<u-icon name="arrow-left" :color="monthArrowColor"></u-icon>
 				</view>
 				<view class="u-calendar__action__text">{{ showTitle }}</view>
-				<view class="u-calendar__action__icon">
-					<u-icon v-if="changeMonth" name="arrow-right" :color="monthArrowColor" @click="changeMonthHandler(1)"></u-icon>
+				<view v-if="changeMonth" class="u-calendar__action__icon" @click="changeMonthHandler(1)">
+					<u-icon  name="arrow-right" :color="monthArrowColor"></u-icon>
 				</view>
-				<view class="u-calendar__action__icon">
-					<u-icon v-if="changeYear" name="arrow-right-double" :color="yearArrowColor" @click="changeYearHandler(1)"></u-icon>
+				<view v-if="changeYear" class="u-calendar__action__icon" @click="changeYearHandler(1)">
+					<u-icon  name="arrow-right-double" :color="yearArrowColor"></u-icon>
 				</view>
 			</view>
 			<view class="u-calendar__week-day">
@@ -551,10 +551,11 @@
 		}
 		
 		&__action {
-			padding: 40rpx 0 40rpx 0;
+			padding: 30rpx 0 30rpx 0;
 			
 			&__icon {
-				margin: 0 16rpx;
+				margin: 0 6rpx;
+				padding: 10rpx;
 			}
 			
 			&__text {
@@ -563,6 +564,7 @@
 				font-size: 32rpx;
 				line-height: 32rpx;
 				font-weight: bold;
+				min-width: 220rpx
 			}
 		}
 	
