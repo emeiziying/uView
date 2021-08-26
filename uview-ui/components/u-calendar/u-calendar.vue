@@ -45,7 +45,7 @@
 					<view class="u-calendar__content__item__tips" :style="{color:activeColor}" v-if="mode== 'range' && startDate==`${year}-${month}-${index+1}` && startDate!=endDate">{{startText}}</view>
 					<view class="u-calendar__content__item__tips" :style="{color:activeColor}" v-if="mode== 'range' && endDate==`${year}-${month}-${index+1}`">{{endText}}</view>
 				</view>
-				<view class="u-calendar__content__bg-month">{{month}}</view>
+				<!-- <view class="u-calendar__content__bg-month">{{month}}</view> -->
 			</view>
 			<view class="u-calendar__bottom">
 				<view class="u-calendar__bottom__choose">
