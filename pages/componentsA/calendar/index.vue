@@ -48,7 +48,7 @@
 				rangeBgColor: 'rgba(41,121,255,0.13)',
 				activeBgColor: '#2979ff',
 				btnType: 'primary',
-				// defaultValue:["2021-8-11", "2021-8-19"]
+				defaultValue:["2021-8-11", "2021-8-19"]
 			}
 		},
 		computed: {
@@ -61,8 +61,11 @@
 				this.show = !index;
 			},
 			modeChange(index) {
+				this.defaultValue = index== 0 ? '2021-8-1' : ["2021-8-11", "2021-8-19"] 
+				
 				this.mode = index == 0 ? 'date' : 'range';
 				this.show = true;
+
 			},
 			styleChange(index) {
 				if(index == 0) {

@@ -280,6 +280,9 @@
 		watch: {
 			dataChange(val) {
 				this.init()
+			},
+			defaultValue(val) {
+				this.init()
 			}
 		},
 		created() {
