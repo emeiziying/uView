@@ -150,7 +150,7 @@
 	}
 
 	.u-switch--on {
-		background-color: #1989fa;
+		background-color: $u-type-primary;
 	}
 
 	.u-switch--on .u-switch__node {
