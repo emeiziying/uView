@@ -3,7 +3,7 @@
 		<view class="u-demo-wrap">
 			<view class="u-demo-title">演示效果</view>
 			<view class="u-demo-area">
-				<u-subsection v-if="change" :bold="bold" :active-color="activeColor" :current="current" :mode="mode" :list="['代付款', '待收货', '待评价']"></u-subsection>
+				<u-subsection v-if="change" :bold="bold" :active-color="activeColor" :current="current" :mode="mode" :list="list"></u-subsection>
 			</view>
 		</view>
 		<view class="u-config-wrap">
@@ -26,6 +26,10 @@
 				<view class="u-item-title">字体加粗</view>
 				<u-subsection mode="button" :list="['是', '否']" @change="boldChange"></u-subsection>
 			</view>
+			<view class="u-config-item">
+				<view class="u-item-title">list修改</view>
+				<u-subsection mode="button" :list="['1', '2']" @change="listChange"></u-subsection>
+			</view>
 		</view>
 	</view>
 </template>
@@ -39,6 +43,8 @@
 				activeColor: this.$u.color['warning'],
 				bold: true,
 				change: true,
+
+				list:['代付款', '待收货', '待评价']
 			}
 		},
 		methods: {
@@ -77,6 +83,14 @@
 						this.bold = true;break;
 					case 1:
 						this.bold = false;break;
+				}
+			},
+			listChange(e) {
+				switch(e) {
+					case 0:
+						this.list = ['代付款', '待收货', '待评价'];break;
+					case 1:
+						this.list = ['代付款', '待收货'];break;
 				}
 			}
 		}

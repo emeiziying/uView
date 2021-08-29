@@ -116,6 +116,31 @@
 					this.currentIndex = nVal;
 					this.changeSectionStatus(nVal);
 				}
+			},
+			list(value) {
+				// 更新list
+				this.listInfo = value.map((val, index) => {
+					if (typeof val != 'object') {
+						let obj = {
+							width: 0,
+							name: val
+						};
+						return obj;
+					} else {
+						val.width = 0;
+						return val;
+					}
+				});
+
+				// 更新tab宽度
+				this.$nextTick(()=>{
+					this.getTabsInfo();
+				})
+
+				// 如果当前index大于list长度，重置到0
+				if(this.currentIndex >= this.listInfo.length) {
+					this.click(0)
+				}
 			}
 		},
 		created() {
