@@ -52,6 +52,16 @@
 				type: String,
 				default: '#606266'
 			},
+			// 激活的文字颜色
+			activeTextColor: {
+				type: String,
+				default: '#333333'
+			},
+			// 未激活的文字颜色
+			inactiveTextColor: {
+				type: String,
+				default: '#333333'
+			},
 			// 模式选择，mode=button为按钮形式，mode=subsection时为分段模式
 			mode: {
 				type: String,
@@ -180,9 +190,9 @@
 					// 设置字体颜色
 					if (this.mode == 'subsection') {
 						if (index == this.currentIndex) {
-							style.color = '#ffffff';
+							style.color = this.activeTextColor;
 						} else {
-							style.color = this.activeColor;
+							style.color = this.inactiveTextColor;
 						}
 					} else {
 						if (index == this.currentIndex) {
