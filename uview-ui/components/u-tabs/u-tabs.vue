@@ -4,7 +4,7 @@
 	}">
 		<!-- $u.getRect()对组件根节点无效，因为写了.in(this)，故这里获取内层接点尺寸 -->
 		<view :id="id">
-			<scroll-view scroll-x class="u-scroll-view" :scroll-left="scrollLeft" scroll-with-animation>
+			<scroll-view scroll-x class="u-scroll-view" :scroll-left="scrollLeft" scroll-with-animation :scroll-into-view="`u-tab-item-${scrollToIndex}`">
 				<view class="u-scroll-box" :class="{'u-tabs-scorll-flex': !isScroll}">
 					<view class="u-tab-item u-line-1" :id="'u-tab-item-' + index" v-for="(item, index) in list" :key="index" @tap="clickTab(index)"
 					 :style="[tabItemStyle(index)]">
@@ -64,6 +64,10 @@
 			// 当前活动tab的索引
 			current: {
 				type: [Number, String],
+				default: 0
+			},
+			scrollToIndex: {
+				type: Number,
 				default: 0
 			},
 			// 导航栏的高度和行高

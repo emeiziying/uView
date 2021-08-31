@@ -4,7 +4,7 @@
 			<view class="u-demo-title">演示效果</view>
 			<view class="u-demo-area">
 				<u-toast ref="uToast"></u-toast>
-				<u-tabs v-if="control" bg-color="#fafafa" :bold="bold" :active-color="activeColor" :list="list"
+				<u-tabs v-if="control" bg-color="#fafafa" :bold="bold" :active-color="activeColor" :list="list" :scrollToIndex="scrollToIndex"
 				@change="change" :current="current" :is-scroll="isScroll" :offset="offset"></u-tabs>
 			</view>
 		</view>
@@ -27,6 +27,10 @@
 			<view class="u-config-item">
 				<view class="u-item-title">字体加粗</view>
 				<u-subsection mode="button" :list="['是', '否']" @change="boldChange"></u-subsection>
+			</view>
+			<view class="u-config-item">
+				<view class="u-item-title">滚动至</view>
+				<u-subsection mode="button" :list="[0, 2]" @change="targetChange"></u-subsection>
 			</view>
 		</view>
 	</view>
@@ -65,7 +69,8 @@
 				activeColor: this.$u.color['primary'],
 				bold: true,
 				control: true,
-				offset: [5, -5]
+				offset: [5, -5],
+				scrollToIndex: 0
 			}
 		},
 		onLoad() {
@@ -134,6 +139,14 @@
 						this.bold = true;break;
 					case 1:
 						this.bold = false;break;
+				}
+			},
+			targetChange(e) {
+				switch(e) {
+					case 0:
+						this.scrollToIndex = 0;break;
+					case 1:
+						this.scrollToIndex = 3;break;
 				}
 			}
 		}
